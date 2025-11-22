@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "lib/db.js"  ],
+, "lib/db.js", "app/page.tsx.backup", "app/page.js", "app/components/FeatureCard.js", "app/components/CTAButton.js"  ],
   "exclude": ["node_modules"]
 }

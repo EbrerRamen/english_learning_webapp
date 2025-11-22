@@ -1,5 +1,5 @@
-import FeatureCard from "@/components/FeatureCard";
-import CTAButton from "@/components/CTAButton";
+import FeatureCard from "./components/FeatureCard";
+import CTAButton from "./components/CTAButton";
 
 export default function HomePage() {
   return (
