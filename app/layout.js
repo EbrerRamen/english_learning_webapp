@@ -1,3 +1,4 @@
+import "./globals.css"; // import Tailwind
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 

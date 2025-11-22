@@ -3,6 +3,7 @@ import CTAButton from "./components/CTAButton";
 
 export default function HomePage() {
   return (
+    
     <div className="container mx-auto px-6 py-12">
       {/* Hero Section */}
       <section className="text-center mb-16">
