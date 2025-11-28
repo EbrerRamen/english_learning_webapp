@@ -30,7 +30,6 @@ export default function LoginPage() {
         return;
       }
 
-      // If login success, redirect
       router.push("/");
     } catch (err) {
       setError("Something went wrong.");
@@ -39,63 +38,66 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F4F4F4] px-4">
-      <div className="bg-white shadow-xl rounded-3xl p-10 max-w-md w-full">
-        <h2 className="text-3xl font-bold text-center text-[#0C2B4E] mb-6">
-          Login
-        </h2>
+    <div className="min-h-screen bg-[#F4F4F4] flex items-center justify-center px-6">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8">
 
+        {/* Title */}
+        <h1 className="text-3xl font-bold text-center text-[#0C2B4E] mb-2">
+          Welcome Back
+        </h1>
+        <p className="text-center text-gray-600 mb-6">
+          Log in to continue learning.
+        </p>
+
+        {/* Error */}
         {error && (
-          <p className="text-red-600 text-center mb-4 bg-red-100 py-2 rounded">
+          <p className="bg-red-100 text-red-700 p-3 rounded-lg mb-4 text-sm text-center">
             {error}
           </p>
         )}
 
+        {/* Form */}
         <form onSubmit={handleLogin} className="space-y-5">
           {/* Email */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Email
-            </label>
+            <label className="block mb-1 font-medium text-gray-700">Email</label>
             <input
               type="email"
-              className="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#1D546C]"
+              className="w-full p-3 border rounded-lg bg-gray-50 
+              focus:outline-none focus:ring-2 focus:ring-[#1A3D64]"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
           </div>
 
           {/* Password */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Password
-            </label>
+            <label className="block mb-1 font-medium text-gray-700">Password</label>
             <input
               type="password"
-              className="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#1D546C]"
+              className="w-full p-3 border rounded-lg bg-gray-50 
+              focus:outline-none focus:ring-2 focus:ring-[#1A3D64]"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
             />
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#1D546C] hover:bg-[#0C2B4E] text-white py-3 rounded-xl font-semibold transition"
+            className="w-full bg-[#1A3D64] hover:bg-[#0C2B4E] 
+            text-white py-3 rounded-lg font-semibold transition shadow-md"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        {/* Redirect link */}
-        <p className="text-center text-gray-600 mt-6">
+        {/* Redirect */}
+        <p className="text-center text-gray-600 mt-5">
           Don’t have an account?{" "}
-          <Link href="/register" className="text-[#0C2B4E] font-semibold hover:underline">
+          <Link href="/register" className="text-[#1A3D64] font-semibold">
             Sign up
           </Link>
         </p>
