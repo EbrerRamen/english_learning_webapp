@@ -30,7 +30,11 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/");
+      // Store token in localStorage
+      localStorage.setItem("authToken", data.token);
+
+      // Redirect to dashboard
+      router.push("/dashboard");
     } catch (err) {
       setError("Something went wrong.");
       setLoading(false);

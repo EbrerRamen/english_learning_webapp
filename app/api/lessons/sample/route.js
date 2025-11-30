@@ -45,7 +45,7 @@ export async function GET(req) {
         vocabulary: [
           {
             word: "Hello",
-            bengaliMeaning: "হ্যালো / নমস্কার",
+            bengaliMeaning: "হ্যালো",
             example: 'Hello, how are you?',
           },
           {

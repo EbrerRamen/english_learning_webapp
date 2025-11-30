@@ -1,6 +1,8 @@
 import Link from "next/link";
 
 export default function Navbar() {
+  // Note: This is a Server Component
+  // For client-side auth state, use a separate ClientNavbar component
   return (
     <nav className="bg-[#0C2B4E] text-white shadow-md">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
