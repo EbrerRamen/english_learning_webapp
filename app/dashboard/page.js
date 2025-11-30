@@ -56,24 +56,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#F4F4F4]">
-      {/* Navbar */}
-      <nav className="bg-white shadow-md">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="text-2xl font-bold text-[#0C2B4E]">
-            📚 Learn English
-          </Link>
-          <div className="flex items-center gap-6">
-            <span className="text-gray-700">Welcome, <strong>{user.name}</strong></span>
-            <button
-              onClick={logout}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      </nav>
-
       {/* Main Content */}
       <div className="container mx-auto px-6 py-12">
         {/* Welcome Section */}
