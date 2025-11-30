@@ -33,6 +33,9 @@ export default function LoginPage() {
       // Store token in localStorage
       localStorage.setItem("authToken", data.token);
 
+      // Dispatch custom event to notify useAuth hook
+      window.dispatchEvent(new Event("authTokenChanged"));
+
       // Redirect to dashboard
       router.push("/dashboard");
     } catch (err) {
