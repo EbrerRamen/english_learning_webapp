@@ -137,13 +137,24 @@ export default function LessonDetailPage({ params }) {
           </section>
         )}
 
-        <section className="text-center py-8">
-          <p className="text-gray-700 mb-6 text-lg">Want to save your progress? Sign up to track lessons.</p>
-          <div className="flex gap-4 justify-center">
-            <Link href="/register" className="bg-[#1A3D64] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#0C2B4E] transition">Sign Up Now</Link>
-            <Link href="/" className="bg-white text-[#1A3D64] border-2 border-[#1A3D64] px-8 py-3 rounded-full font-semibold hover:bg-[#F4F4F4] transition">Back to Home</Link>
-          </div>
-        </section>
+        {!authLoading && (
+          <section className="text-center py-8">
+            {user ? (
+              <div>
+                <p className="text-gray-700 mb-6 text-lg">Your progress is being tracked!</p>
+                <Link href="/" className="inline-block bg-white text-[#1A3D64] border-2 border-[#1A3D64] px-8 py-3 rounded-full font-semibold hover:bg-[#F4F4F4] transition">Back to Home</Link>
+              </div>
+            ) : (
+              <div>
+                <p className="text-gray-700 mb-6 text-lg">Want to save your progress? Sign up to track lessons.</p>
+                <div className="flex gap-4 justify-center">
+                  <Link href="/register" className="bg-[#1A3D64] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#0C2B4E] transition">Sign Up Now</Link>
+                  <Link href="/" className="bg-white text-[#1A3D64] border-2 border-[#1A3D64] px-8 py-3 rounded-full font-semibold hover:bg-[#F4F4F4] transition">Back to Home</Link>
+                </div>
+              </div>
+            )}
+          </section>
+        )}
       </div>
     </div>
   );
