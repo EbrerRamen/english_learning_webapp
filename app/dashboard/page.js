@@ -20,12 +20,10 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchLessons = async () => {
       try {
-        // TODO: Create an endpoint to get all lessons
-        // For now, we'll just fetch the sample lesson
-        const res = await fetch("/api/lessons/sample");
+        const res = await fetch("/api/lessons");
         if (res.ok) {
-          const lesson = await res.json();
-          setLessons([lesson]);
+          const lessonsData = await res.json();
+          setLessons(lessonsData);
         }
       } catch (error) {
         console.error("Error fetching lessons:", error);

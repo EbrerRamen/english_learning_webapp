@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/useAuth";
 
 export default function LessonDetailPage({ params }) {
-  const { id } = params;
+  const { id } = use(params);
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
   const [lesson, setLesson] = useState(null);
