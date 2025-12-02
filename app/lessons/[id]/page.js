@@ -13,6 +13,8 @@ export default function LessonDetailPage({ params }) {
   const [lesson, setLesson] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [progress, setProgress] = useState(null);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const fetchLesson = async () => {
@@ -33,6 +35,59 @@ export default function LessonDetailPage({ params }) {
 
     fetchLesson();
   }, [id]);
+
+  // Fetch lesson progress for current user (if logged in)
+  useEffect(() => {
+    const fetchProgress = async () => {
+      if (!user || !lesson) return;
+
+      try {
+        const token = localStorage.getItem("authToken");
+        const res = await fetch(`/api/progress?lessonId=${id}`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setProgress(data && data.length ? data[0] : null);
+        }
+      } catch (err) {
+        console.error("Error fetching progress:", err);
+      }
+    };
+
+    fetchProgress();
+  }, [user, lesson, id]);
+
+  const saveProgress = async ({ completed = false, score = 0 } = {}) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      router.push(`/login?next=/lessons/${id}`);
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const res = await fetch("/api/progress", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ lessonId: id, completed, score }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setProgress(data);
+      } else {
+        console.error("Failed to save progress", await res.text());
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   // If lesson is protected (not a sample) and user is not authenticated, redirect to login
   useEffect(() => {
@@ -141,8 +196,43 @@ export default function LessonDetailPage({ params }) {
           <section className="text-center py-8">
             {user ? (
               <div>
-                <p className="text-gray-700 mb-6 text-lg">Your progress is being tracked!</p>
-                <Link href="/" className="inline-block bg-white text-[#1A3D64] border-2 border-[#1A3D64] px-8 py-3 rounded-full font-semibold hover:bg-[#F4F4F4] transition">Back to Home</Link>
+                {progress?.completed ? (
+                  <div>
+                    <p className="text-green-700 mb-4 font-semibold">Lesson completed ✓</p>
+                    <p className="text-gray-700 mb-6">Last accessed: {new Date(progress.lastAccessed).toLocaleString()}</p>
+                    <div className="flex gap-4 justify-center">
+                      <button
+                        onClick={() => saveProgress({ completed: false })}
+                        disabled={saving}
+                        className="bg-yellow-500 text-white px-6 py-2 rounded-full"
+                      >
+                        Mark as Incomplete
+                      </button>
+                      <Link href="/" className="inline-block bg-white text-[#1A3D64] border-2 border-[#1A3D64] px-8 py-3 rounded-full font-semibold hover:bg-[#F4F4F4] transition">Back to Home</Link>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-gray-700 mb-6 text-lg">Your progress is being tracked!</p>
+                    <div className="flex gap-4 justify-center">
+                      <button
+                        onClick={() => saveProgress({ completed: false })}
+                        disabled={saving}
+                        className="bg-[#1A3D64] text-white px-6 py-2 rounded-full"
+                      >
+                        {saving ? "Saving..." : "Save Progress"}
+                      </button>
+                      <button
+                        onClick={() => saveProgress({ completed: true })}
+                        disabled={saving}
+                        className="bg-green-600 text-white px-6 py-2 rounded-full"
+                      >
+                        {saving ? "Saving..." : "Mark Complete"}
+                      </button>
+                      <Link href="/" className="inline-block bg-white text-[#1A3D64] border-2 border-[#1A3D64] px-8 py-3 rounded-full font-semibold hover:bg-[#F4F4F4] transition">Back to Home</Link>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <div>
